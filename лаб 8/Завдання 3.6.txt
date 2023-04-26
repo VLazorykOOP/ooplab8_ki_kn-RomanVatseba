@@ -1,0 +1,74 @@
+template<typename T>
+class BinaryTree {
+private:
+    struct Node {
+        T data;
+        Node* left;
+        Node* right;
+        Node(const T& newData) : data(newData), left(nullptr), right(nullptr) {}
+    };
+    Node* root;
+    void add(Node* &currNode, const T& newData) {
+        if (currNode == nullptr) {
+            currNode = new Node(newData);
+        }
+        else if (newData < currNode->data) {
+            add(currNode->left, newData);
+        }
+        else {
+            add(currNode->right, newData);
+        }
+    }
+    void inorderTraversal(Node* currNode) {
+        if (currNode != nullptr) {
+            inorderTraversal(currNode->left);
+            cout << currNode->data << " ";
+            inorderTraversal(currNode->right);
+        }
+    }
+    void postorderTraversal(Node* currNode) {
+        if (currNode != nullptr) {
+            postorderTraversal(currNode->left);
+            postorderTraversal(currNode->right);
+            cout << currNode->data << " ";
+        }
+    }
+    void preorderTraversal(Node* currNode) {
+        if (currNode != nullptr) {
+            cout << currNode->data << " ";
+            preorderTraversal(currNode->left);
+            preorderTraversal(currNode->right);
+        }
+    }
+    bool search(Node* currNode, const T& data) {
+        if (currNode == nullptr) {
+            return false;
+        }
+        if (data == currNode->data) {
+            return true;
+        }
+        if (data < currNode->data) {
+            return search(currNode->left, data);
+        }
+        else {
+            return search(currNode->right, data);
+        }
+    }
+public:
+    BinaryTree() : root(nullptr) {}
+    void add(const T& newData) {
+        add(root, newData);
+    }
+    void inorderTraversal() {
+        inorderTraversal(root);
+    }
+    void postorderTraversal() {
+        postorderTraversal(root);
+    }
+    void preorderTraversal() {
+        preorderTraversal(root);
+    }
+    bool search(const T& data) {
+        return search(root, data);
+    }
+};
